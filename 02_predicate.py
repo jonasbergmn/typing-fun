@@ -39,6 +39,5 @@ p3 = Predicate[Customer](lambda x: x.name.lower().endswith("s"), "Ends with s")
 
 c = Customer("jona")
 
-x = c > p1 + p2 + p3
-
-print(x)
+result = c > p1 + p2 + p3
+result = (p1 + p2 + p3)(c) # same like row above

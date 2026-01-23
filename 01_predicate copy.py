@@ -5,7 +5,7 @@ from dataclasses import dataclass
 class Customer:
     name: Annotated[str, "This is the name of the Customer"]
 
-    def __gt__(self, predicate: 'Predicate[Customer]') -> bool:
+    def __gt__(self, predicate: 'Predicate[Customer] | PredicateChain[Customer]') -> bool:
         return predicate(self)
 
 class PredicateChain[T]:
@@ -52,4 +52,5 @@ c = Customer("jonas")
 
 p3 = p1 + p2 + p3
 
-p3(c)
+result = c > p3
+result = p3(c) # same like row above
