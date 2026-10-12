@@ -1,4 +1,5 @@
-from typing import Callable, Sequence, overload
+from collections.abc import Callable, Sequence
+from typing import overload
 
 type Number = int | float
 type NullableNumber = Number | None

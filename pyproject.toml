@@ -8,9 +8,82 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "pytest>=9.1.1",
     "ruff>=0.14.14",
     "setuptools-scm>=9.2.2",
+    "ty>=0.0.85",
 ]
 
-[tool.setuptools_scm]
+# ==============================================================================
+# Ruff Configuration
+# ==============================================================================
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+indent-width = 4
 
+# Files and directories to ignore
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+# Selected rule sets:
+# E/W: pycodestyle errors and warnings
+# F: Pyflakes (unused imports, variables, etc.)
+# I: isort (import sorting)
+# B: flake8-bugbear (common bug-prone patterns)
+# UP: pyupgrade (modernize Python syntax)
+# SIM: flake8-simplify (simplify code structure)
+# TCH: flake8-type-checking (move typing-only imports into TYPE_CHECKING blocks)
+select = ["E", "W", "F", "I", "B", "UP", "SIM", "TCH"]
+
+# Sensible ignores for common patterns
+ignore = [
+    "E501",  # Let Ruff formatter handle line length rather than flagging errors
+]
+
+# Automatically apply safe fixes when triggered
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["my_project"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+docstring-code-format = true  # Formats code snippets inside docstrings
+
+# ==============================================================================
+# ty Configuration
+# ==============================================================================
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.src]
+include = ["src", "tests"]
+exclude = [
+    ".git",
+    ".venv",
+    "build",
+    "dist",
+    "**/__pycache__",
+]
+
+[tool.ty.rules]
+# Diagnostics severity: "error", "warn", or "ignore"
+possibly-missing-import = "error"
+unused-ignore-comment = "warn"
+index-out-of-bounds = "error"
+call-argument-type = "error"
+unresolved-attribute = "error"
+
+# Relax unresolved attribute warnings in test suites
+# [tool.ty.overrides."tests/**"]
+# rules = { unresolved-attribute = "warn" }

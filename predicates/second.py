@@ -1,11 +1,13 @@
-from typing import Callable, Annotated
+from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Annotated
+
 
 @dataclass(slots=True, frozen=True)
 class Customer:
     name: Annotated[str, "This is the name of the Customer"]
 
-    def __gt__(self, predicate: 'Predicate[Customer]') -> bool:
+    def __gt__(self, predicate: "Predicate[Customer]") -> bool:
         return predicate(self)
 
 
@@ -18,12 +20,13 @@ class Predicate[T]:
         print(self)
         return self.func(subject)
 
-    def combine(self, other: 'Predicate[T]'):
+    def combine(self, other: "Predicate[T]"):
         return Predicate[T](
-            lambda x : self.func(x) and other.func(x),
-            "\r\n".join((self.descr, other.descr)))
+            lambda x: self.func(x) and other.func(x),
+            "\r\n".join((self.descr, other.descr)),
+        )
 
-    def __add__(self, other: 'Predicate[T]'):
+    def __add__(self, other: "Predicate[T]"):
         return self.combine(other)
 
     def __repr__(self) -> str:
@@ -40,4 +43,4 @@ p3 = Predicate[Customer](lambda x: x.name.lower().endswith("s"), "Ends with s")
 c = Customer("jona")
 
 result = c > p1 + p2 + p3
-result = (p1 + p2 + p3)(c) # same like row above
+result = (p1 + p2 + p3)(c)  # same like row above
