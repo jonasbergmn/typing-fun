@@ -1,35 +1,32 @@
-import argparse
-from typing import TypeVar
+import sys
 
-_ARG_TYPES = str | int | float
+raw_arguments = sys.argv[1:]
 
-
-class AargParser:
-    def __init__(self): ...
-
-    def __enter__(self) -> "AargParser": ...
-
-    def add_arg[T: _ARG_TYPES](self, arg_keys: str, t: TypeVar): ...
-
-    def __exit__(self, type, value, traceback): ...
+print(raw_arguments)
+print(sys.argv)
 
 
-def demo():
-    with AargParser() as aarg:
-        aarg.add_arg("demo", t=str)
+class ArgumentDefinition:
+    def __init__(self, *keys: str):
+        self.keys = keys
+
+    def matches(self):
+        return any(key in sys.argv[1:] for key in self.keys)
+
+    def matches_at(self) -> int:
+        if self.matches():
+            for key in self.keys:
+                return sys.argv.index(key)
+        raise Exception()
+
+    @property
+    def value(self) -> str:
+        return sys.argv[self.matches_at() + 1]
 
 
 if __name__ == "__main__":
-    arg_parser = argparse.ArgumentParser()
-
-    arg_parser.add_argument(
-        "--name",
-        "-n",
-        type=str,
-        default="Jonas",
-        help="Tell me your name",
-    )
-
-    args = arg_parser.parse_args()
-
-    print(args.name)
+    name = ArgumentDefinition("--name", "-n")
+    # print(name.matches())
+    # print(name.matches_at())
+    value = name.value
+    print(value)
