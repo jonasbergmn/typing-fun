@@ -1,9 +1,13 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from typing import TYPE_CHECKING
 
 from timeseries.constants import FORMAT
-from timeseries.grid import Grid
-from timeseries.types import Number, Points
+from timeseries.type_definitions import Number, Points
+
+if TYPE_CHECKING:
+    from datetime import datetime
+
+    from timeseries.grid import Grid
 
 
 class IncompatibelGridException(Exception): ...

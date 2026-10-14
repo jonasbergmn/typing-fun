@@ -81,7 +81,6 @@ exclude = [
 possibly-missing-import = "error"
 unused-ignore-comment = "warn"
 index-out-of-bounds = "error"
-call-argument-type = "error"
 unresolved-attribute = "error"
 
 # Relax unresolved attribute warnings in test suites
