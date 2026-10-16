@@ -9,6 +9,8 @@ output-format = "concise"
 # Opt-out strategy: enable everything, then disable what conflicts or is noisy.
 select = ["ALL"]
 ignore = [
+    "D105",   
+    "D102", 
     "D100",   # missing module docstring
     "D104",   # missing package docstring
     "D203",   # conflicts with D211

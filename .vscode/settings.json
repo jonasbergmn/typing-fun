@@ -8,10 +8,10 @@
     }
   },
   // Use ty for language features and type checking:
-  "python.languageServer": "Pylance",
   "python.testing.pytestArgs": [
     "tests"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
+  "ruff.configuration": "ruff.toml"
 }
